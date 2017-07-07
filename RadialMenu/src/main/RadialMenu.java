@@ -214,8 +214,11 @@ public class RadialMenu extends Group {
 						openTransition2.playFrom(startDuration);
 				    }
 				
-				openTransition2 = createOpenTransition2(item);
-			    openTransition2.play();
+				Animation openTransition2Temp = createOpenTransition2(item);
+				openTransition2Temp.play();
+				if (openTransition2 != null)
+					openTransition2.play();
+			    openTransition2 = openTransition2Temp;
 	    	}
 	    });
 	    
