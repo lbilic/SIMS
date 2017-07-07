@@ -71,8 +71,7 @@ public class RadialMenu extends Group {
     private final Group subTextsGroup = new Group();
     private Circle fakeBackground;
     private Text centerText;
-    private Circle radiusStroke;
-    private Circle innerRadiusStroke;
+    private RadialMenuItem lastShown = null;
 
     private final Color centerColor = Color.web("ffffff");
     private final Color itemColor = Color.web("ffffff80");
@@ -94,8 +93,8 @@ public class RadialMenu extends Group {
 
     public RadialMenu(final String[] itemNames,
 	    final double innerRadius,
-	    final double radius, final double centerClosedRadius,
-	    final double centerOpenedRadius, final String[][] subItemNames,
+	    final double radius, final double closedRadius,
+	    final double openedRadius, final String[][] subItemNames,
 	    final double subInnerRadius, final double subRadius) {
 
 	menus = itemNames;
@@ -104,8 +103,8 @@ public class RadialMenu extends Group {
 	itemRadius = radius;
 	subItemInnerRadius = subInnerRadius;
 	subItemRadius = subRadius;
-	this.centerClosedRadius = centerClosedRadius;
-	this.centerOpenedRadius = centerOpenedRadius;
+	centerClosedRadius = closedRadius;
+	centerOpenedRadius = openedRadius;
 	
 
 	itemToTexts = new HashMap<RadialMenuItem, List<Text>>();
@@ -113,20 +112,9 @@ public class RadialMenu extends Group {
 	items = new ArrayList<RadialMenuItem>();
 	subItems = new ArrayList<RadialMenuItem>();
 
-	//radiusStroke = CircleBuilder.create().radius(0).stroke(strokeColor)
-	//	.fill(null).build();
-	//innerRadiusStroke = CircleBuilder.create().radius(0).fill(null)
-	//	.stroke(strokeColor).build();
-
-	//itemsGroup.getChildren().addAll(radiusStroke, innerRadiusStroke);
-
+	
 	for (int i = 0; i < menus.length ; i++) {
 		final String itemTitle = menus[i];
-	    //final double length = 100.0  / (menus.length-1);
-	    //final RadialMenuItem item = RadialMenuItemBuilder.create()
-		//    .backgroundFill(itemColor).innerRadius(0).radius(1)
-		//    .strokeVisible(false).offset(3).startAngle(startAngle)
-		//    .length(length).clockwise(false).build();
 	    
 	    final RadialMenuItem item = RadialMenuItemBuilder.create()
 			    .clockwise(true)
@@ -160,7 +148,6 @@ public class RadialMenu extends Group {
 			    .clockwise(true)
 			    .build();
 		    
-		    //items.add(subItem);
 		    subItemsTemp.add(subItem);
 		    subItems.add(subItem);
 		    subItemsGroup.getChildren().add(subItem);
@@ -205,6 +192,9 @@ public class RadialMenu extends Group {
 	    	@Override
 	    	public void handle(MouseEvent event){
 	    		
+	    		if (lastShown == item)
+	    			return;
+	    			
 	    		for (final Text charText : texts) {
 				    charText.setFill(Color.BLACK);
 				    charText.setFont(textFontBold);
@@ -224,6 +214,8 @@ public class RadialMenu extends Group {
 				
 				openTransition2 = createOpenTransition2(item);
 			    openTransition2.play();
+			    
+			    lastShown = item;
 	    	}
 	    });
 	    
@@ -237,9 +229,6 @@ public class RadialMenu extends Group {
 				}
 	    	}
 	    });
-	    
-
-	    //startAngle += length;
 	}
 
 	center = CircleBuilder.create().fill(Color.YELLOW)
@@ -292,10 +281,9 @@ public class RadialMenu extends Group {
 	};
 	fakeBackground = CircleBuilder.create().fill(Color.TRANSPARENT)
 		.radius(centerClosedRadius + 4).centerX(0).centerX(0).build();
-
+	
 	setOnMouseEntered(expansionEventHandler);
 	setOnMouseExited(expansionEventHandler);
-	setOnMouseClicked(expansionEventHandler);
 	
 	getChildren().add(fakeBackground);
 	getChildren().add(subItemsGroup);
@@ -305,7 +293,7 @@ public class RadialMenu extends Group {
 	
     }
 
-private Animation createOpenTransition2(RadialMenuItem theItem){
+    private Animation createOpenTransition2(RadialMenuItem theItem){
 		
 		final ParallelTransition openTransition = new ParallelTransition();
 		
@@ -333,7 +321,6 @@ private Animation createOpenTransition2(RadialMenuItem theItem){
 		    
 		    final Animation textTransition = getTextOpenTransition3(item, i);
 		    openTransition.getChildren().add(textTransition);
-		    //System.out.println(textTransition);
 		}
 		
 		
@@ -344,123 +331,114 @@ private Animation createOpenTransition2(RadialMenuItem theItem){
 
 		openTransition.getChildren().add(radiusTransition);
 		
-		final Animation centerTransition = new Timeline(new KeyFrame(
-				Duration.ZERO, new KeyValue(
-					fakeBackground.radiusProperty(),
-					fakeBackground.getRadius())), new KeyFrame(
-				Duration.millis(animDuration2),
-				new KeyValue(fakeBackground.radiusProperty(), subItemRadius + 4)));
+		if (!subItemsTemp.isEmpty()){
+			final Animation centerTransition = new Timeline(new KeyFrame(
+					Duration.ZERO, new KeyValue(
+						fakeBackground.radiusProperty(),
+						fakeBackground.getRadius())), new KeyFrame(
+					Duration.millis(animDuration2),
+					new KeyValue(fakeBackground.radiusProperty(), subItemRadius + 4)));
 			openTransition.getChildren().add(centerTransition);
-		
+		}
 		return openTransition;
 	}
     
     private Animation createOpenTransition() {
-	final ParallelTransition openTransition = new ParallelTransition();
-	final Animation centerTransition = new Timeline(new KeyFrame(
-		Duration.ZERO, new KeyValue(center.radiusProperty(),
-			centerClosedRadius), new KeyValue(
-			fakeBackground.radiusProperty(),
-			fakeBackground.getRadius())), new KeyFrame(
-		Duration.millis(animDuration), new KeyValue(
-			center.radiusProperty(), centerOpenedRadius),
-		new KeyValue(fakeBackground.radiusProperty(), itemRadius + 4)));
-	openTransition.getChildren().add(centerTransition);
-
-	// Text font transition
-	final DoubleProperty animValue = new SimpleDoubleProperty();
-	final ChangeListener<? super Number> listener = new ChangeListener<Number>() {
-
-	    @Override
-	    public void changed(
-		    final ObservableValue<? extends Number> obsValue,
-		    final Number previousValue, final Number newValue) {
-		final Font f = getTextFont(newValue.doubleValue());
-
-		centerText.setFont(f);
-
-	    }
-
-	    Font[] fonts = new Font[] {
-		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.BOLD, 20),
-		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.BOLD, 21),
-		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.BOLD, 22),
-		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.BOLD, 23),
-		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.BOLD, 24) };
-
-	    private Font getTextFont(final double newValue) {
-		final int fontArrayIndex;
-		if (newValue < 0.2) {
-		    fontArrayIndex = 0;
-		} else if (newValue < 0.4) {
-		    fontArrayIndex = 1;
-		} else if (newValue < 0.6) {
-		    fontArrayIndex = 2;
-		} else if (newValue < 0.8) {
-		    fontArrayIndex = 3;
-		} else {
-		    fontArrayIndex = 4;
+		final ParallelTransition openTransition = new ParallelTransition();
+		final Animation centerTransition = new Timeline(new KeyFrame(
+			Duration.ZERO, new KeyValue(center.radiusProperty(),
+				centerClosedRadius), new KeyValue(
+				fakeBackground.radiusProperty(),
+				fakeBackground.getRadius())), new KeyFrame(
+			Duration.millis(animDuration), new KeyValue(
+				center.radiusProperty(), centerOpenedRadius),
+			new KeyValue(fakeBackground.radiusProperty(), itemRadius + 4)));
+		openTransition.getChildren().add(centerTransition);
+	
+		// Text font transition
+		final DoubleProperty animValue = new SimpleDoubleProperty();
+		final ChangeListener<? super Number> listener = new ChangeListener<Number>() {
+	
+		    @Override
+		    public void changed(
+			    final ObservableValue<? extends Number> obsValue,
+			    final Number previousValue, final Number newValue) {
+			final Font f = getTextFont(newValue.doubleValue());
+	
+			centerText.setFont(f);
+	
+		    }
+	
+		    Font[] fonts = new Font[] {
+			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.BOLD, 20),
+			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.BOLD, 21),
+			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.BOLD, 22),
+			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.BOLD, 23),
+			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.BOLD, 24) };
+	
+		    private Font getTextFont(final double newValue) {
+			final int fontArrayIndex;
+			if (newValue < 0.2) {
+			    fontArrayIndex = 0;
+			} else if (newValue < 0.4) {
+			    fontArrayIndex = 1;
+			} else if (newValue < 0.6) {
+			    fontArrayIndex = 2;
+			} else if (newValue < 0.8) {
+			    fontArrayIndex = 3;
+			} else {
+			    fontArrayIndex = 4;
+			}
+			return fonts[fontArrayIndex];
+		    }
+		};
+		animValue.addListener(listener);
+	
+		final Animation menuTextTransition = new Timeline(new KeyFrame(
+			Duration.ZERO, new KeyValue(animValue, 0)), new KeyFrame(
+			Duration.millis(animDuration), new KeyValue(animValue, 1.0)));
+	
+		openTransition.getChildren().add(menuTextTransition);
+	
+		final List<KeyValue> keyValueZero = new ArrayList<KeyValue>();
+		final List<KeyValue> keyValueFinal = new ArrayList<KeyValue>();
+		
+		for (final RadialMenuItem subItem : subItems){
+			keyValueZero.add(new KeyValue(subItem.innerRadiusProperty(),
+			    centerClosedRadius));
+		    keyValueZero.add(new KeyValue(subItem.radiusProperty(),
+			    centerClosedRadius));
+	
+		    keyValueFinal.add(new KeyValue(subItem.innerRadiusProperty(),
+			    itemInnerRadius));
+		    keyValueFinal.add(new KeyValue(subItem.radiusProperty(), itemRadius));
 		}
-		return fonts[fontArrayIndex];
-	    }
-	};
-	animValue.addListener(listener);
-
-	final Animation menuTextTransition = new Timeline(new KeyFrame(
-		Duration.ZERO, new KeyValue(animValue, 0)), new KeyFrame(
-		Duration.millis(animDuration), new KeyValue(animValue, 1.0)));
-
-	openTransition.getChildren().add(menuTextTransition);
-
-	final List<KeyValue> keyValueZero = new ArrayList<KeyValue>();
-	final List<KeyValue> keyValueFinal = new ArrayList<KeyValue>();
 	
-	for (final RadialMenuItem subItem : subItems){
-		keyValueZero.add(new KeyValue(subItem.innerRadiusProperty(),
-		    centerClosedRadius));
-	    keyValueZero.add(new KeyValue(subItem.radiusProperty(),
-		    centerClosedRadius));
-
-	    keyValueFinal.add(new KeyValue(subItem.innerRadiusProperty(),
-		    itemInnerRadius));
-	    keyValueFinal.add(new KeyValue(subItem.radiusProperty(), itemRadius));
+		for (final RadialMenuItem item : items) {
+			
+		    keyValueZero.add(new KeyValue(item.innerRadiusProperty(),
+			    centerClosedRadius));
+		    keyValueZero.add(new KeyValue(item.radiusProperty(),
+			    centerClosedRadius));
+	
+		    keyValueFinal.add(new KeyValue(item.innerRadiusProperty(),
+			    itemInnerRadius));
+		    keyValueFinal.add(new KeyValue(item.radiusProperty(), itemRadius));
+	
+		    final Animation textTransition = getTextOpenTransition(item);
+		    openTransition.getChildren().add(textTransition);
+		}
+		
+	
+		final Animation radiusTransition = new Timeline(new KeyFrame(
+			Duration.ZERO, keyValueZero.toArray(new KeyValue[0])),
+			new KeyFrame(Duration.millis(animDuration), keyValueFinal
+				.toArray(new KeyValue[0])));
+	
+		openTransition.getChildren().add(radiusTransition);
+	
+		return openTransition;
 	}
-
-	for (final RadialMenuItem item : items) {
-	    keyValueZero.add(new KeyValue(item.innerRadiusProperty(),
-		    centerClosedRadius));
-	    keyValueZero.add(new KeyValue(item.radiusProperty(),
-		    centerClosedRadius));
-
-	    keyValueFinal.add(new KeyValue(item.innerRadiusProperty(),
-		    itemInnerRadius));
-	    keyValueFinal.add(new KeyValue(item.radiusProperty(), itemRadius));
-
-	    final Animation textTransition = getTextOpenTransition(item);
-	    openTransition.getChildren().add(textTransition);
-	}
-	
-	
-
-	//keyValueZero.add(new KeyValue(radiusStroke.radiusProperty(),
-	//	centerClosedRadius));
-	//keyValueZero.add(new KeyValue(innerRadiusStroke.radiusProperty(),
-	//	centerClosedRadius));
-
-	//keyValueFinal.add(new KeyValue(radiusStroke.radiusProperty(),
-	//	itemInnerRadius));
-	//keyValueFinal.add(new KeyValue(innerRadiusStroke.radiusProperty(),
-	//	itemRadius));
-
-	final Animation radiusTransition = new Timeline(new KeyFrame(
-		Duration.ZERO, keyValueZero.toArray(new KeyValue[0])),
-		new KeyFrame(Duration.millis(animDuration), keyValueFinal
-			.toArray(new KeyValue[0])));
-
-	openTransition.getChildren().add(radiusTransition);
-
-	return openTransition;
-    }
     
     
     public Animation getTextOpenTransition2(final RadialMenuItem item){
@@ -597,113 +575,110 @@ private Animation createOpenTransition2(RadialMenuItem theItem){
         }
     
 
-    public Animation getTextOpenTransition(final RadialMenuItem item) {
-	final List<Text> texts = itemToTexts.get(item);
-	final double textRadius = (itemInnerRadius + itemRadius) / 2.0;
-	final double length = item.getLength() * 0.9;
-
-	final double startAngle = -item.getStartAngle() - item.getLength();
-	final double angleOffset = item.getLength() * 0.1;
-	final double angleStep = (length) / (texts.size() + 1);
-
-	for (final Text charText : texts) {
-	    charText.setEffect(null);
-	    charText.setVisible(true);
-	}
-
-	final DoubleProperty animValue = new SimpleDoubleProperty();
-	final ChangeListener<? super Number> listener = new ChangeListener<Number>() {
-
-	    @Override
-	    public void changed(
-		    final ObservableValue<? extends Number> obsValue,
-		    final Number previousValue, final Number newValue) {
-		final double textRotationOffset = 180;
-		final double radius = centerClosedRadius
-			+ (textRadius - centerClosedRadius)
-			* newValue.doubleValue();
-
-		double letterAngle = startAngle + angleStep + angleOffset
-			+ ((1 - newValue.doubleValue()) * textRotationOffset)-1.0;
-
-		final Font f = getTextFont(newValue.doubleValue());
-
+	public Animation getTextOpenTransition(final RadialMenuItem item) {
+		final List<Text> texts = itemToTexts.get(item);
+		final double textRadius = (itemInnerRadius + itemRadius) / 2.0;
+		final double length = item.getLength() * 0.9;
+	
+		final double startAngle = -item.getStartAngle() - item.getLength();
+		final double angleOffset = item.getLength() * 0.1;
+		final double angleStep = (length) / (texts.size() + 1);
+	
 		for (final Text charText : texts) {
-		    charText.setRotate(0);
-		    charText.setFont(f);
-		    final Bounds bounds = charText.getBoundsInParent();
-		    final double lettertWidth = bounds.getWidth();
-		    final double lettertHeight = bounds.getHeight();
-
-		    final double currentX = xCenterOnCircle(letterAngle,
-			    radius, lettertWidth);
-		    final double currentY = yCenterLetterOnCircle(letterAngle,
-			    radius, lettertHeight);
-		    final double rotate = rotate(letterAngle);
-
-		    charText.setTranslateX(currentX);
-		    charText.setTranslateY(currentY);
-		    charText.setRotate(rotate);
-
-		    letterAngle += angleStep;
+		    charText.setEffect(null);
+		    charText.setVisible(true);
 		}
-
-	    }
-
-	    Font[] fonts = new Font[] {
-		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 6),
-		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 7),
-		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 8),
-		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 10),
-		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 11) };
-
-	    private Font getTextFont(final double newValue) {
-		final int fontArrayIndex;
-		if (newValue < 0.2) {
-		    fontArrayIndex = 0;
-		} else if (newValue < 0.4) {
-		    fontArrayIndex = 1;
-		} else if (newValue < 0.6) {
-		    fontArrayIndex = 2;
-		} else if (newValue < 0.8) {
-		    fontArrayIndex = 3;
-		} else {
-		    fontArrayIndex = 4;
-		}
-		return fonts[fontArrayIndex];
-	    }
-	};
-	animValue.addListener(listener);
-
-	final Animation itemTransition = new Timeline(new KeyFrame(
-		Duration.ZERO, new KeyValue(animValue, 0)), new KeyFrame(
-		Duration.millis(animDuration), new KeyValue(animValue, 1.0)));
-	itemTransition.setOnFinished(new EventHandler<ActionEvent>() {
-
-	    boolean visible = false;
-
-	    @Override
-	    public void handle(final ActionEvent event) {
-		for (final Text charText : texts) {
-		    charText.setEffect(new Glow());
-		    if (visible) {
-			charText.setVisible(false);
+	
+		final DoubleProperty animValue = new SimpleDoubleProperty();
+		final ChangeListener<? super Number> listener = new ChangeListener<Number>() {
+	
+		    @Override
+		    public void changed(
+			    final ObservableValue<? extends Number> obsValue,
+			    final Number previousValue, final Number newValue) {
+			final double textRotationOffset = 180;
+			final double radius = centerClosedRadius
+				+ (textRadius - centerClosedRadius)
+				* newValue.doubleValue();
+	
+			double letterAngle = startAngle + angleStep + angleOffset
+				+ ((1 - newValue.doubleValue()) * textRotationOffset)-1.0;
+	
+			final Font f = getTextFont(newValue.doubleValue());
+	
+			for (final Text charText : texts) {
+			    charText.setRotate(0);
+			    charText.setFont(f);
+			    final Bounds bounds = charText.getBoundsInParent();
+			    final double lettertWidth = bounds.getWidth();
+			    final double lettertHeight = bounds.getHeight();
+	
+			    final double currentX = xCenterOnCircle(letterAngle,
+				    radius, lettertWidth);
+			    final double currentY = yCenterLetterOnCircle(letterAngle,
+				    radius, lettertHeight);
+			    final double rotate = rotate(letterAngle);
+	
+			    charText.setTranslateX(currentX);
+			    charText.setTranslateY(currentY);
+			    charText.setRotate(rotate);
+	
+			    letterAngle += angleStep;
+			}
+	
 		    }
-		}
-		visible = !visible;
-	    }
-
-	});
-	return itemTransition;
-
+	
+		    Font[] fonts = new Font[] {
+			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 6),
+			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 7),
+			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 8),
+			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 10),
+			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 11) };
+	
+		    private Font getTextFont(final double newValue) {
+			final int fontArrayIndex;
+			if (newValue < 0.2) {
+			    fontArrayIndex = 0;
+			} else if (newValue < 0.4) {
+			    fontArrayIndex = 1;
+			} else if (newValue < 0.6) {
+			    fontArrayIndex = 2;
+			} else if (newValue < 0.8) {
+			    fontArrayIndex = 3;
+			} else {
+			    fontArrayIndex = 4;
+			}
+			return fonts[fontArrayIndex];
+		    }
+		};
+		animValue.addListener(listener);
+	
+		final Animation itemTransition = new Timeline(new KeyFrame(
+			Duration.ZERO, new KeyValue(animValue, 0)), new KeyFrame(
+			Duration.millis(animDuration), new KeyValue(animValue, 1.0)));
+		itemTransition.setOnFinished(new EventHandler<ActionEvent>() {
+	
+		    boolean visible = false;
+	
+		    @Override
+		    public void handle(final ActionEvent event) {
+			for (final Text charText : texts) {
+			    charText.setEffect(new Glow());
+			    if (visible) {
+				charText.setVisible(false);
+			    }
+			}
+			visible = !visible;
+		    }
+	
+		});
+		return itemTransition;
     }
 
     private List<Text> getTextNodes(final String title) {
-	final List<Text> texts = new ArrayList<Text>();
-	//final char[] titleCharArray = title.toCharArray();
+    	final List<Text> texts = new ArrayList<Text>();
 
-	//for (int i = titleCharArray.length - 1; i >= 0; i--) {
-	    final Text charText = new Text(title);
+    	final Text charText = new Text(title);
 	    charText.setFontSmoothingType(FontSmoothingType.LCD);
 	    charText.setSmooth(true);
 	    charText.setMouseTransparent(true);
@@ -711,24 +686,26 @@ private Animation createOpenTransition2(RadialMenuItem theItem){
 	    charText.setBlendMode(BlendMode.COLOR_BURN);
 	    charText.setFont(new Font(0));
 	    texts.add(charText);
-	//}
 
-	return texts;
+	    return texts;
     }
 
     private double xCenterOnCircle(final double angle, final double radius,
 	    final double width) {
-	return radius * Math.cos(Math.toRadians(angle)) - width / 2.0;
+	
+    	return radius * Math.cos(Math.toRadians(angle)) - width / 2.0;
     }
 
     private double yCenterLetterOnCircle(final double angle,
 	    final double radius, final double height) {
-	return -radius * Math.sin(Math.toRadians(angle)) + height / 4.0;
+	
+    	return -radius * Math.sin(Math.toRadians(angle)) + height / 4.0;
     }
 
     private double rotate(final double angle) {
 	final double rotate = 0 - angle;
-	return rotate;
+		
+		return rotate;
     }
 
 }
