@@ -46,7 +46,7 @@ public class Main extends Application {
 		final String[] menus = new String[] {"STEAL", "ASSIST","SHOT", "REBOUND", 
 				"TURNOVER", "FAUL"};
 		
-		final String[][] subMenus = {{"1 POINT", "2 POINT", "3 POINT"}, {"OFFENSIVE", "DEFENSIVE"},{},{},{},{}};
+		final String[][] subMenus = {{},{},{"1 POINT", "2 POINT", "3 POINT"}, {"OFFENSIVE", "DEFENSIVE"},{},{}};
 
 		radialMenu = new RadialMenu(menus, itemInnerRadius, itemRadius,
 			centerClosedRadius, centerOpenedRadius, subMenus, subItemInnerRadius, subItemRadius);

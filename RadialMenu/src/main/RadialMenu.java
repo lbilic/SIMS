@@ -84,7 +84,7 @@ public class RadialMenu extends Group {
     final Font menuFont = Font.font(java.awt.Font.SANS_SERIF, FontWeight.BOLD,20);
 
     private double animDuration = 350;
-    private double animDuration2 = 150;
+    private double animDuration2 = 100;
     private Animation openTransition;
     private Animation openTransition2;
     public final Map<RadialMenuItem, List<Text>> itemToTexts;
@@ -192,13 +192,15 @@ public class RadialMenu extends Group {
 	    	@Override
 	    	public void handle(MouseEvent event){
 	    		
-	    		if (lastShown == item)
-	    			return;
+	    		
 	    			
 	    		for (final Text charText : texts) {
 				    charText.setFill(Color.BLACK);
 				    charText.setFont(textFontBold);
 				}
+	    		
+	    		if (lastShown == item)
+	    			return;
 	    		
 	    		if (openTransition2 != null) {
 					Duration startDuration = Duration.millis(animDuration);
@@ -214,8 +216,6 @@ public class RadialMenu extends Group {
 				
 				openTransition2 = createOpenTransition2(item);
 			    openTransition2.play();
-			    
-			    lastShown = item;
 	    	}
 	    });
 	    
@@ -227,6 +227,9 @@ public class RadialMenu extends Group {
 				    charText.setFill(textColor);
 				    charText.setFont(textFont);
 				}
+	    		
+
+			    lastShown = item;
 	    	}
 	    });
 	}
@@ -275,6 +278,8 @@ public class RadialMenu extends Group {
 				openTransition.setCycleCount(2);
 				openTransition.playFrom(startDuration);
 			    }
+		    
+		    lastShown = null;
 		    
 		}
 	    }
