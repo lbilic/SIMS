@@ -242,6 +242,26 @@ public class RadialMenu extends Group {
 	centerText.setFontSmoothingType(FontSmoothingType.LCD);
 
 	
+	center.setOnMouseEntered(new EventHandler<MouseEvent>(){
+		
+		@Override
+		public void handle(MouseEvent event){
+			lastShown = null;
+			if (openTransition2 != null) {
+				Duration startDuration = Duration.millis(animDuration);
+			    
+					if (openTransition2.getStatus() == Status.RUNNING) {
+					    openTransition2.stop();
+					    startDuration = openTransition.getCurrentTime();
+					}
+					openTransition2.setAutoReverse(true);
+					openTransition2.setCycleCount(2);
+					openTransition2.playFrom(startDuration);
+			    }
+			openTransition2 = null;
+		}
+	});
+	
 	final StackPane stack = new StackPane();
 	stack.getChildren().addAll(center, centerText);
 	stack.translateXProperty().bind(stack.widthProperty().divide(-2.0));
@@ -558,7 +578,7 @@ public class RadialMenu extends Group {
 
     	final Animation itemTransition = new Timeline(new KeyFrame(
     		Duration.ZERO, new KeyValue(animValue, 0)), new KeyFrame(
-    		Duration.millis(animDuration), new KeyValue(animValue, 1.0)));
+    		Duration.millis(animDuration2), new KeyValue(animValue, 1.0)));
     	itemTransition.setOnFinished(new EventHandler<ActionEvent>() {
 
     	    boolean visible = false;
