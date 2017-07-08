@@ -237,7 +237,7 @@ public class RadialMenu extends Group {
 	    });
 	}
 
-	center = CircleBuilder.create().fill(Color.YELLOW)
+	center = CircleBuilder.create().fill(Color.WHITE)
 		.radius(centerClosedRadius).stroke(strokeColor).centerX(0)
 		.centerX(0).build();
 	centerText = new Text("23");

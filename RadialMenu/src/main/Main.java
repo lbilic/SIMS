@@ -24,7 +24,7 @@ public class Main extends Application {
 	public void start(final Stage primaryStage) throws Exception {
 		container = new Group();
 		final Scene scene = new Scene(container);
-		scene.setFill(Color.WHITE);
+		scene.setFill(Color.LIGHTBLUE);
 		//primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 		primaryStage.setWidth(450);
@@ -39,9 +39,6 @@ public class Main extends Application {
 		final double centerOpenedRadius = 50;
 		final double subItemInnerRadius = 137;
 		final double subItemRadius = 210;
-
-		//final String[] menus = new String[] {"FAUL", "TURNOVER", "STEAL",
-		//		"ASSIST", "REBOUND", "SHOT"};
 		
 		final String[] menus = new String[] {"STEAL", "ASSIST","SHOT", "REBOUND", 
 				"TURNOVER", "FAUL"};
