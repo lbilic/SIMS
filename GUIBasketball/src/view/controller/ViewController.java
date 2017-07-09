@@ -85,8 +85,10 @@ public class ViewController implements Initializable {
 			
 			if (((MouseEvent) e).getButton().equals(MouseButton.SECONDARY)){
 				System.out.println(column + " " + row + " promasio");
+				MainController.getInstance().eventOccured("MISS", column, row);
 			}else {
 	        	System.out.println(column + " " + row + " dao");
+	        	MainController.getInstance().eventOccured("SCORE", column, row);
 			}
 	    });
 		
@@ -130,8 +132,14 @@ public class ViewController implements Initializable {
 
 						System.out.println("Player No: " + item.getPlayersNumber());
 						
-						if (((RadialMenuItem)o).text.contains("SHOT"))
+						if (((RadialMenuItem)o).text.contains("SHOT")){
+							MainController.getInstance().shotOccured("HOME", 
+									item.getPlayersNumber(), ((RadialMenuItem)o).text);
 							full_court.changePane();
+						}else{
+							MainController.getInstance().eventOccured("HOME",
+									item.getPlayersNumber(), ((RadialMenuItem)o).text);
+						}
 					}
 				});
 			}
@@ -139,7 +147,8 @@ public class ViewController implements Initializable {
 				o.setOnMousePressed(new EventHandler<MouseEvent>(){
 					@Override
 					public void handle(final MouseEvent e){
-
+						MainController.getInstance().eventOccured("HOME", 
+								item.getPlayersNumber(), ((RadialMenuItem)o).text);
 					}
 				});
 			}
@@ -161,8 +170,14 @@ public class ViewController implements Initializable {
 						
 						//MainController.eventOccured("AWAY", ((RadialMenuItem)o).text, item.getPlayersNumber());
 						
-						if (((RadialMenuItem)o).text.contains("SHOT"))
+						if (((RadialMenuItem)o).text.contains("SHOT")){
+							MainController.getInstance().shotOccured("AWAY", 
+									item.getPlayersNumber(), ((RadialMenuItem)o).text);
 							full_court.changePane();
+						}else{
+							MainController.getInstance().eventOccured("AWAY",
+									item.getPlayersNumber(), ((RadialMenuItem)o).text);
+						}
 					}
 				});
 			}
@@ -171,8 +186,8 @@ public class ViewController implements Initializable {
 					@Override
 					public void handle(final MouseEvent e){
 
-						System.out.println(((RadialMenuItem)o).text);
-						System.out.println("Player No: " + item.getPlayersNumber());
+						MainController.getInstance().eventOccured("AWAY", 
+								item.getPlayersNumber(), ((RadialMenuItem)o).text);
 					}
 				});
 			}
