@@ -95,8 +95,8 @@ public class ViewController implements Initializable {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, 
 					Boolean oldValue, Boolean newValue) {
-				statistics.setVisible(!newValue);
-				statistics.setManaged(!newValue);
+				statistics.setVisible(newValue);
+				statistics.setManaged(newValue);
 			}
 		});
 		
