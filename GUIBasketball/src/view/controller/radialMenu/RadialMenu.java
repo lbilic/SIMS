@@ -36,7 +36,7 @@ import javafx.util.Duration;
 
 public class RadialMenu extends Group {
 
-
+	private Color color = Color.WHITE;
     private double itemInnerRadius = 45;
     private double itemRadius = 100;
     private double centerClosedRadius = 28;
@@ -76,6 +76,7 @@ public class RadialMenu extends Group {
     public final Map<RadialMenuItem, List<Text>> itemToTexts;
     public final Map<RadialMenuItem, List<RadialMenuItem>> itemToSubItem;
     private double subMenuOffset = 1;
+    private boolean animationRunning = false;
 
     public RadialMenu() {
     	itemToTexts = new HashMap<RadialMenuItem, List<Text>>();
@@ -93,7 +94,7 @@ public class RadialMenu extends Group {
 			    .clockwise(true)
 			    .startAngle(i*90.0/menus.length + startAngle)
 			    .length(100.0/menus.length)
-			    //.backgroundFill(itemColor)
+			    .backgroundFill(color)
 			    //.backgroundVisible(false)
 			    //.backgroundMouseOnFill(Color.RED)
 			    .strokeVisible(true)
@@ -111,7 +112,7 @@ public class RadialMenu extends Group {
 	    	final String subItemTitle = subMenus[i][j];
 		    final double subLength = 90.0  / 2.5 /(menus.length-1);
 		    final RadialMenuItem subItem = RadialMenuItemBuilder.create()
-			    //.backgroundFill(itemColor)
+			    .backgroundFill(color)
 		    	.innerRadius(0)
 			    .radius(1)
 			    .strokeVisible(true)
@@ -211,7 +212,7 @@ public class RadialMenu extends Group {
 	    });
 	}
 
-	center = CircleBuilder.create().fill(Color.YELLOW)
+	center = CircleBuilder.create().fill(color)
 		.radius(centerClosedRadius).stroke(strokeColor).centerX(0)
 		.centerX(0).build();
 	centerText = new Text("23");
@@ -224,17 +225,19 @@ public class RadialMenu extends Group {
 		@Override
 		public void handle(MouseEvent event){
 			lastShown = null;
-			if (openTransition2 != null) {
-				Duration startDuration = Duration.millis(animDuration);
-			    
-					if (openTransition2.getStatus() == Status.RUNNING) {
-					    openTransition2.stop();
-					    startDuration = openTransition.getCurrentTime();
-					}
-					openTransition2.setAutoReverse(true);
-					openTransition2.setCycleCount(2);
-					openTransition2.playFrom(startDuration);
-			    }
+			if (animationRunning){
+				if (openTransition2 != null) {
+					Duration startDuration = Duration.millis(animDuration);
+				    
+						if (openTransition2.getStatus() == Status.RUNNING) {
+						    openTransition2.stop();
+						    startDuration = openTransition.getCurrentTime();
+						}
+						openTransition2.setAutoReverse(true);
+						openTransition2.setCycleCount(2);
+						openTransition2.playFrom(startDuration);
+				    }
+			}
 			openTransition2 = null;
 		}
 	});
@@ -248,34 +251,38 @@ public class RadialMenu extends Group {
 	    @Override
 	    public void handle(final MouseEvent event) {
 	    	
-		if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-		    openTransition = createOpenTransition();
-		    openTransition.play();
+		if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+			if (!animationRunning){
+			    openTransition = createOpenTransition();
+			    openTransition.play();
+			    animationRunning = true;
+			}
 		} else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
 		    
-		    
-		    if (openTransition2 != null) {
-				Duration startDuration = Duration.millis(animDuration);
-				if (openTransition2.getStatus() == Status.RUNNING) {
-				    openTransition2.stop();
-				    startDuration = openTransition2.getCurrentTime();
-				}
-				openTransition2.setAutoReverse(true);
-				openTransition2.setCycleCount(2);
-				openTransition2.playFrom(startDuration);
-			    }
-		    
-		    if (openTransition != null) {
-				Duration startDuration = Duration.millis(animDuration);
-				if (openTransition.getStatus() == Status.RUNNING) {
-				    openTransition.stop();
-				    startDuration = openTransition.getCurrentTime();
-				}
-				openTransition.setAutoReverse(true);
-				openTransition.setCycleCount(2);
-				openTransition.playFrom(startDuration);
-			    }
-		    
+		    if (animationRunning){
+			    if (openTransition2 != null) {
+					Duration startDuration = Duration.millis(animDuration);
+					if (openTransition2.getStatus() == Status.RUNNING) {
+					    openTransition2.stop();
+					    startDuration = openTransition2.getCurrentTime();
+					}
+					openTransition2.setAutoReverse(true);
+					openTransition2.setCycleCount(2);
+					openTransition2.playFrom(startDuration);
+				    }
+			    
+			    if (openTransition != null) {
+					Duration startDuration = Duration.millis(animDuration);
+					if (openTransition.getStatus() == Status.RUNNING) {
+					    openTransition.stop();
+					    startDuration = openTransition.getCurrentTime();
+					}
+					openTransition.setAutoReverse(true);
+					openTransition.setCycleCount(2);
+					openTransition.playFrom(startDuration);
+				    }
+		    }
+		    animationRunning = false;
 		    lastShown = null;
 		    
 		}
@@ -284,7 +291,7 @@ public class RadialMenu extends Group {
 	fakeBackground = CircleBuilder.create().fill(Color.TRANSPARENT)
 		.radius(centerClosedRadius + 4).centerX(0).centerX(0).build();
 	
-	setOnMouseEntered(expansionEventHandler);
+	setOnMousePressed(expansionEventHandler);
 	setOnMouseExited(expansionEventHandler);
 	
 	getChildren().add(fakeBackground);
@@ -712,6 +719,16 @@ public class RadialMenu extends Group {
     
     public void setPlayersNumber(String number){
     	centerText.setText(number);
+    }
+    
+    public void setColor(Color color){
+    	center.setFill(color);
+    	for (RadialMenuItem item : items){
+    		item.setBackgroundFill(color);
+    	}
+    	for (RadialMenuItem subItem : subItems){
+    		subItem.setBackgroundFill(color);
+    	}
     }
     
     public String getPlayersNumber(){

@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import view.controller.radialMenu.RadialMenu;
 import view.controller.radialMenu.RadialMenuItem;
 
@@ -35,7 +36,7 @@ public class ViewController implements Initializable {
 		//Ovako setujes broj na dugmetu
 		//imas i getPlayersNumber koja ti vraca String koji broj igrac nosi
 		//full_court.players_on_court ti je arrayList dugmadi na terenu
-		full_court.players_on_court.get(0).setPlayersNumber("1");
+		full_court.players_on_court_home.get(0).setPlayersNumber("1");
 		
 		
 		//Ovde prosledi poruku o eventu kad ga napravis da se vidi sta je poslednje uneto
@@ -60,8 +61,22 @@ public class ViewController implements Initializable {
 		ArrayList<String> names = new ArrayList<String>();
 		names.add("Balenovic M.");
 		names.add("Bilic L.");
+
+		setHomeTeamPlayers(names);		
 		
-		setHomeTeamPlayers(names);
+		// Dodavanje brojeva na dugmad na terenu
+		ArrayList<String> numbers = new ArrayList<String>();
+		numbers.add("23");
+		numbers.add("4");
+		numbers.add("1");
+		numbers.add("12");
+		numbers.add("33");
+		setAwayTeamOnCourt(numbers);
+		
+		//Podesavanje boje timova
+		setHomeTeamColor(Color.GOLD);
+		setAwayTeamColor(Color.DARKSEAGREEN);
+		
 		
 		full_court.court.canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
 			
@@ -101,7 +116,7 @@ public class ViewController implements Initializable {
 		});
 		
 		
-		for (RadialMenu item : full_court.players_on_court){
+		for (RadialMenu item : full_court.players_on_court_home){
 			for (Object o : (item).subItems){
 				((RadialMenuItem) o).setOnMousePressed(new EventHandler<MouseEvent>(){
 					@Override
@@ -110,6 +125,38 @@ public class ViewController implements Initializable {
 						//Ovde stavis da ti zove metodu u controlleru
 						// posaljes mu (RadialMenuItem)o.text; - to je radnja
 						// 		item.centerText().getPlayersNumber(); - broj na dresu
+						System.out.println("HOME");
+						System.out.println(((RadialMenuItem)o).text);
+
+						System.out.println("Player No: " + item.getPlayersNumber());
+						
+						if (((RadialMenuItem)o).text.contains("SHOT"))
+							full_court.changePane();
+					}
+				});
+			}
+			for (RadialMenuItem o : item.items){
+				o.setOnMousePressed(new EventHandler<MouseEvent>(){
+					@Override
+					public void handle(final MouseEvent e){
+
+						System.out.println(((RadialMenuItem)o).text);
+						System.out.println("Player No: " + item.getPlayersNumber());
+					}
+				});
+			}
+		}
+		
+		for (RadialMenu item : full_court.players_on_court_away){
+			for (Object o : (item).subItems){
+				((RadialMenuItem) o).setOnMousePressed(new EventHandler<MouseEvent>(){
+					@Override
+					public void handle(final MouseEvent e){
+						
+						//Ovde stavis da ti zove metodu u controlleru
+						// posaljes mu (RadialMenuItem)o.text; - to je radnja
+						// 		item.centerText().getPlayersNumber(); - broj na dresu
+						System.out.println("AWAY");
 						System.out.println(((RadialMenuItem)o).text);
 
 						System.out.println("Player No: " + item.getPlayersNumber());
@@ -159,6 +206,34 @@ public class ViewController implements Initializable {
 	public void setAwayTeamPlayers(ArrayList<String> names){
 		for (int i = 0; i < names.size(); i++){
 			fauls_away.getPlayer(i).setText(names.get(i));
+		}
+	}
+	
+	public void setHomeTeamOnCourt(ArrayList<String> numbers){
+		int i = 0;
+		for (RadialMenu player : full_court.players_on_court_home){
+			player.setPlayersNumber(numbers.get(i));
+			i++;
+		}
+	}
+	
+	public void setAwayTeamOnCourt(ArrayList<String> numbers){
+		int i = 0;
+		for (RadialMenu player : full_court.players_on_court_away){
+			player.setPlayersNumber(numbers.get(i));
+			i++;
+		}
+	}
+	
+	public void setHomeTeamColor(Color color){
+		for (RadialMenu player : full_court.players_on_court_home){
+			player.setColor(color);
+		}
+	}
+	
+	public void setAwayTeamColor(Color color){
+		for (RadialMenu player : full_court.players_on_court_away){
+			player.setColor(color);
 		}
 	}
 }

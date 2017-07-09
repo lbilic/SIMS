@@ -14,13 +14,20 @@ import view.controller.radialMenu.RadialMenu;
 
 public class FullCourt extends StackPane {
 	@FXML Court court;
-	@FXML RadialMenu player1;
-	@FXML RadialMenu player2;
-	@FXML RadialMenu player3;
-	@FXML RadialMenu player4;
-	@FXML RadialMenu player5;
+	@FXML RadialMenu player1_h;
+	@FXML RadialMenu player2_h;
+	@FXML RadialMenu player3_h;
+	@FXML RadialMenu player4_h;
+	@FXML RadialMenu player5_h;
 	
-	List<RadialMenu> players_on_court;
+	@FXML RadialMenu player1_a;
+	@FXML RadialMenu player2_a;
+	@FXML RadialMenu player3_a;
+	@FXML RadialMenu player4_a;
+	@FXML RadialMenu player5_a;
+	
+	List<RadialMenu> players_on_court_home;
+	List<RadialMenu> players_on_court_away;
 	
 	public FullCourt() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/fullCourt.fxml"));
@@ -36,12 +43,19 @@ public class FullCourt extends StackPane {
             	changePane();
             });
             
-            players_on_court = new ArrayList<RadialMenu>();
-            players_on_court.add(player1);
-            players_on_court.add(player2);
-            players_on_court.add(player3);
-            players_on_court.add(player4);
-            players_on_court.add(player5);
+            players_on_court_away = new ArrayList<RadialMenu>();
+            players_on_court_away.add(player1_a);
+            players_on_court_away.add(player2_a);
+            players_on_court_away.add(player3_a);
+            players_on_court_away.add(player4_a);
+            players_on_court_away.add(player5_a);
+            
+            players_on_court_home = new ArrayList<RadialMenu>();
+            players_on_court_home.add(player1_h);
+            players_on_court_home.add(player2_h);
+            players_on_court_home.add(player3_h);
+            players_on_court_home.add(player4_h);
+            players_on_court_home.add(player5_h);
             
             
         } catch (IOException exception) {
