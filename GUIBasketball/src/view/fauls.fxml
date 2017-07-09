@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<?import view.controller.*?>
+<?import view.controller.Player ?>
+
+<fx:root type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="250" prefWidth="250">
+          <Player fx:id="igrac1"/>
+          <Player fx:id="igrac2"/>
+          <Player fx:id="igrac3"/>
+          <Player fx:id="igrac4"/>
+          <Player fx:id="igrac5"/>
+          <Player fx:id="igrac6"/>
+          <Player fx:id="igrac7"/>
+          <Player fx:id="igrac8"/>
+          <Player fx:id="igrac9"/>
+          <Player fx:id="igrac10"/>
+          <Player fx:id="igrac11"/>
+          <Player fx:id="igrac12"/>
+          
+      </VBox>
+   </children>
+</fx:root>
