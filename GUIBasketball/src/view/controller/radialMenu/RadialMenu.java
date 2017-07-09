@@ -44,9 +44,9 @@ public class RadialMenu extends Group {
     private double subItemInnerRadius = 102;
     private double subItemRadius = 160;
     protected String[] menus = new String[] {"STEAL", "ASSIST","SHOT", "REBOUND", 
-			"TURNOVER", "FAUL"};;
+			"FOUL", "TURNOVER", "BLOCK"};;
     protected String[][] subMenus = {{},{},{"1 POINT", "2 POINT", "3 POINT"},
-    		{"OFFENSIVE", "DEFENSIVE"},{},{}};
+    		{"OFFENSIVE", "DEFENSIVE"},{"OFFENSIVE", "DEFENSIVE"},{}, {}};
 
     private Circle center;
     public final List<RadialMenuItem> items;

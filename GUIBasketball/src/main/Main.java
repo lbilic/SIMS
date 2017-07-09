@@ -14,7 +14,6 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/mainWindow.fxml"));
         Parent root = loader.load();
         scene = new Scene(root);
-        
         scene.getStylesheets().add("view/resources/style.css");
 
         stage.setScene(scene);

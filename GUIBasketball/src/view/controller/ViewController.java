@@ -140,8 +140,6 @@ public class ViewController implements Initializable {
 					@Override
 					public void handle(final MouseEvent e){
 
-						System.out.println(((RadialMenuItem)o).text);
-						System.out.println("Player No: " + item.getPlayersNumber());
 					}
 				});
 			}
@@ -160,6 +158,8 @@ public class ViewController implements Initializable {
 						System.out.println(((RadialMenuItem)o).text);
 
 						System.out.println("Player No: " + item.getPlayersNumber());
+						
+						//MainController.eventOccured("AWAY", ((RadialMenuItem)o).text, item.getPlayersNumber());
 						
 						if (((RadialMenuItem)o).text.contains("SHOT"))
 							full_court.changePane();
