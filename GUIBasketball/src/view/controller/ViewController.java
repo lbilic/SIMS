@@ -25,6 +25,7 @@ public class ViewController implements Initializable {
 	@FXML BorderPane statistics;
 	
 	@FXML FullCourt full_court;
+	@FXML ScoreBoard scoreBoard;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -44,6 +45,27 @@ public class ViewController implements Initializable {
 		// ako skupi 5 zoves faulOut();
 		fauls_home.getPlayer(0).faul(0);
 		fauls_home.getPlayer(2).faulOut();
+		
+		//Ovako radis sa semaforom
+		setHomeTeam("Los Angeles Lakers");
+		setAwayTeam("Boston Celtics");
+		setResult("48 : 39");
+		setTime("9 : 12");
+		
+		scoreBoard.time_button.setOnMousePressed(new EventHandler<MouseEvent>(){
+			@Override
+			public void handle(MouseEvent event){
+				if (scoreBoard.time_button.getText().equals("PLAY")){
+					//Ovo je neka tvoja funkcija
+					//Controller.timeStarted();
+					scoreBoard.time_button.setText("PAUSE");
+				}else{
+					// Ovo je neka tvoja funkcija
+					//Controller.timePaused();
+					scoreBoard.time_button.setText("PLAY");
+				}
+			}
+		});
 		
 		check_box_statistics.selectedProperty().addListener(new ChangeListener<Boolean>(){
 
@@ -89,5 +111,20 @@ public class ViewController implements Initializable {
 	
 	public void setStatusBar(String message){
 		statusBar.setText(message);
+	}
+	
+	public void setHomeTeam(String teamName){
+		scoreBoard.home_team.setText(teamName);
+	}
+	
+	public void setAwayTeam(String teamName){
+		scoreBoard.away_team.setText(teamName);
+	}
+	
+	public void setResult(String result){
+		scoreBoard.result.setText(result);
+	}
+	public void setTime(String time){
+		scoreBoard.time.setText(time);
 	}
 }
