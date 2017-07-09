@@ -49,9 +49,7 @@ public class FullCourt extends StackPane {
         }
     }
 	
-	@FXML
 	public void changePane(){
-		
 		changeTop();
 	}
 	

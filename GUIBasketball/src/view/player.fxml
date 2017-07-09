@@ -5,8 +5,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 
-<fx:root alignment="CENTER" prefHeight="20.0" prefWidth="170.0" spacing="2.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-    <TextField fx:id="textField" text="23" prefHeight="20" prefWidth="30" editable="false">
+<fx:root alignment="CENTER" prefHeight="20.0" prefWidth="250" spacing="2.0" type="javafx.scene.layout.HBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+    <TextField fx:id="textField" text="23" prefHeight="20" prefWidth="110" editable="false">
       <HBox.margin>
          <Insets bottom="0.0" left="0.0" right="0.0" top="0.0" />
       </HBox.margin></TextField>

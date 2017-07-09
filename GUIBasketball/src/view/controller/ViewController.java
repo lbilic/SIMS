@@ -1,6 +1,7 @@
 package view.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -10,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import view.controller.radialMenu.RadialMenu;
@@ -51,6 +53,27 @@ public class ViewController implements Initializable {
 		setAwayTeam("Boston Celtics");
 		setResult("48 : 39");
 		setTime("9 : 12");
+		
+		// Kada budes slao imena sortiraj ih po brojevima
+		// i onda indexiraj igrace po tome posto ne mozes da nadjes igraca po imenu ni po broju posle
+		// samo po rednom broju u listi igraca
+		ArrayList<String> names = new ArrayList<String>();
+		names.add("Balenovic M.");
+		names.add("Bilic L.");
+		
+		setHomeTeamPlayers(names);
+		
+		full_court.court.canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {
+			
+			int column = (int) e.getX();
+        	int row = (int) e.getY();
+			
+			if (((MouseEvent) e).getButton().equals(MouseButton.SECONDARY)){
+				System.out.println(column + " " + row + " promasio");
+			}else {
+	        	System.out.println(column + " " + row + " dao");
+			}
+	    });
 		
 		scoreBoard.time_button.setOnMousePressed(new EventHandler<MouseEvent>(){
 			@Override
@@ -126,5 +149,16 @@ public class ViewController implements Initializable {
 	}
 	public void setTime(String time){
 		scoreBoard.time.setText(time);
+	}
+	
+	public void setHomeTeamPlayers(ArrayList<String> names){
+		for (int i = 0; i < names.size(); i++){
+			fauls_home.getPlayer(i).setText(names.get(i));
+		}
+	}
+	public void setAwayTeamPlayers(ArrayList<String> names){
+		for (int i = 0; i < names.size(); i++){
+			fauls_away.getPlayer(i).setText(names.get(i));
+		}
 	}
 }

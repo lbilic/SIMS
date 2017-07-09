@@ -59,9 +59,9 @@ public class RadialMenu extends Group {
     private double centerOpenedRadius = 40;
     private double subItemInnerRadius = 102;
     private double subItemRadius = 160;
-    private String[] menus = new String[] {"STEAL", "ASSIST","SHOT", "REBOUND", 
+    protected String[] menus = new String[] {"STEAL", "ASSIST","SHOT", "REBOUND", 
 			"TURNOVER", "FAUL"};;
-    private String[][] subMenus = {{},{},{"1 POINT", "2 POINT", "3 POINT"},
+    protected String[][] subMenus = {{},{},{"1 POINT", "2 POINT", "3 POINT"},
     		{"OFFENSIVE", "DEFENSIVE"},{},{}};
 
     private Circle center;
@@ -94,13 +94,14 @@ public class RadialMenu extends Group {
     private double subMenuOffset = 1;
 
     public RadialMenu() {
+    	itemToTexts = new HashMap<RadialMenuItem, List<Text>>();
+    	itemToSubItem = new HashMap<RadialMenuItem, List<RadialMenuItem>>();
+    	items = new ArrayList<RadialMenuItem>();
+    	subItems = new ArrayList<RadialMenuItem>();
+    	init();
+    }
 
-	itemToTexts = new HashMap<RadialMenuItem, List<Text>>();
-	itemToSubItem = new HashMap<RadialMenuItem, List<RadialMenuItem>>();
-	items = new ArrayList<RadialMenuItem>();
-	subItems = new ArrayList<RadialMenuItem>();
-
-	
+    public void init(){
 	for (int i = 0; i < menus.length ; i++) {
 		final String itemTitle = menus[i];
 	    

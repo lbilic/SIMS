@@ -7,12 +7,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+	Scene scene;
 
 	@Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/mainWindow.fxml"));
         Parent root = loader.load();
-        Scene scene = new Scene(root);
+        scene = new Scene(root);
         
         scene.getStylesheets().add("view/resources/style.css");
 
