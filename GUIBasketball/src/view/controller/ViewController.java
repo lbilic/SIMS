@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import view.controller.radialMenu.RadialMenu;
@@ -20,6 +21,7 @@ public class ViewController implements Initializable {
 	@FXML Fauls fauls_away;
 	
 	@FXML CheckBox check_box_statistics;
+	@FXML Label statusBar;
 	@FXML BorderPane statistics;
 	
 	@FXML FullCourt full_court;
@@ -31,6 +33,10 @@ public class ViewController implements Initializable {
 		//imas i getPlayersNumber koja ti vraca String koji broj igrac nosi
 		//full_court.players_on_court ti je arrayList dugmadi na terenu
 		full_court.players_on_court.get(0).setPlayersNumber("1");
+		
+		
+		//Ovde prosledi poruku o eventu kad ga napravis da se vidi sta je poslednje uneto
+		setStatusBar("Igrac1 je napravio faul.");
 		
 		//Ovako faule prikazujes
 		// 1.index je koji je redni broj igraca
@@ -63,6 +69,8 @@ public class ViewController implements Initializable {
 
 						System.out.println("Player No: " + item.getPlayersNumber());
 						
+						if (((RadialMenuItem)o).text.contains("SHOT"))
+							full_court.changePane();
 					}
 				});
 			}
@@ -77,5 +85,9 @@ public class ViewController implements Initializable {
 				});
 			}
 		}
+	}
+	
+	public void setStatusBar(String message){
+		statusBar.setText(message);
 	}
 }

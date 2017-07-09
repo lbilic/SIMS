@@ -20,7 +20,8 @@
 			<bottom>
 				<HBox>
 					<children>
-						<Label text="Hello World!" />
+						<Label text="Hello World!" fx:id="statusBar"/>
+						
 						<CheckBox fx:id="check_box_statistics" text="Statistics"/>
 					</children>
 				</HBox>
