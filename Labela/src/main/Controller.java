@@ -14,6 +14,13 @@ public class Controller extends AnchorPane {
 	@FXML Igrac igrac3;
 	@FXML Igrac igrac4;
 	@FXML Igrac igrac5;
+	@FXML Igrac igrac6;
+	@FXML Igrac igrac7;
+	@FXML Igrac igrac8;
+	@FXML Igrac igrac9;
+	@FXML Igrac igrac10;
+	@FXML Igrac igrac11;
+	@FXML Igrac igrac12;
 	
 	int count = 0;
 	
@@ -32,6 +39,13 @@ public class Controller extends AnchorPane {
             igraci.add(igrac3);
             igraci.add(igrac4);
             igraci.add(igrac5);
+            igraci.add(igrac6);
+            igraci.add(igrac7);
+            igraci.add(igrac8);
+            igraci.add(igrac9);
+            igraci.add(igrac10);
+            igraci.add(igrac11);
+            igraci.add(igrac12);
             //igrac1.getStyleClass().add("root2");
             //igrac2.getStyleClass().add("root2");
             //igrac3.getStyleClass().add("root2");
@@ -45,14 +59,5 @@ public class Controller extends AnchorPane {
 	
 	public Igrac getIgrac(int index){
 		return igraci.get(index);
-	}
-	
-	@FXML
-	public void foo(){
-		if (count > 4) return;
-		Igrac i = getIgrac(3);
-		i.faul(count++);
-		
-		if (count > 4) i.faulOut();
 	}
 }

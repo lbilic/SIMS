@@ -33,23 +33,11 @@ public class Main extends Application {
 		primaryStage.setTitle("Radial Menu Demo");
 		primaryStage.show();
 
-		final double itemInnerRadius = 60;
-		final double itemRadius = 135;
-		final double centerClosedRadius = 38;
-		final double centerOpenedRadius = 50;
-		final double subItemInnerRadius = 137;
-		final double subItemRadius = 210;
 		
-		final String[] menus = new String[] {"STEAL", "ASSIST","SHOT", "REBOUND", 
-				"TURNOVER", "FAUL"};
-		
-		final String[][] subMenus = {{},{},{"1 POINT", "2 POINT", "3 POINT"}, {"OFFENSIVE", "DEFENSIVE"},{},{}};
+		radialMenu = new RadialMenu();
 
-		radialMenu = new RadialMenu(menus, itemInnerRadius, itemRadius,
-			centerClosedRadius, centerOpenedRadius, subMenus, subItemInnerRadius, subItemRadius);
-
-		radialMenu.setTranslateX(200);
-		radialMenu.setTranslateY(200);
+		//radialMenu.setTranslateX(100);
+		//radialMenu.setTranslateY(200);
 		container.getChildren().addAll(radialMenu);
 			
 		

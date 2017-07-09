@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  */
-package main;
+package view.controller.radialMenu;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,26 +53,26 @@ import javafx.util.Duration;
 public class RadialMenu extends Group {
 
 
-    private double itemInnerRadius = 60;
-    private double itemRadius = 135;
-    private double centerClosedRadius = 38;
-    private double centerOpenedRadius = 50;
-    private double subItemInnerRadius = 137;
-    private double subItemRadius = 210;
+    private double itemInnerRadius = 45;
+    private double itemRadius = 100;
+    private double centerClosedRadius = 28;
+    private double centerOpenedRadius = 40;
+    private double subItemInnerRadius = 102;
+    private double subItemRadius = 160;
     private String[] menus = new String[] {"STEAL", "ASSIST","SHOT", "REBOUND", 
 			"TURNOVER", "FAUL"};;
     private String[][] subMenus = {{},{},{"1 POINT", "2 POINT", "3 POINT"},
     		{"OFFENSIVE", "DEFENSIVE"},{},{}};
 
     private Circle center;
-    final List<RadialMenuItem> items;
-    final List<RadialMenuItem> subItems;
+    public final List<RadialMenuItem> items;
+    public final List<RadialMenuItem> subItems;
     private final Group itemsGroup = new Group();
     private final Group textsGroup = new Group();
     private final Group subItemsGroup = new Group();
     private final Group subTextsGroup = new Group();
     private Circle fakeBackground;
-    private Text centerText;
+    public Text centerText;
     private RadialMenuItem lastShown = null;
 
     private final Color centerColor = Color.web("ffffff");
@@ -81,8 +81,8 @@ public class RadialMenu extends Group {
     private Paint strokeColor = Color.web("c0c0c0");
     private double startAngle = -46.0;
 
-    final Font textFont = Font.font(java.awt.Font.SANS_SERIF,FontWeight.NORMAL, 11);
-    final Font textFontBold = Font.font(java.awt.Font.SANS_SERIF,FontWeight.BOLD, 11);
+    final Font textFont = Font.font(java.awt.Font.SANS_SERIF,FontWeight.NORMAL, 10);
+    final Font textFontBold = Font.font(java.awt.Font.SANS_SERIF,FontWeight.BOLD, 10);
     final Font menuFont = Font.font(java.awt.Font.SANS_SERIF, FontWeight.BOLD,20);
 
     private double animDuration = 350;
@@ -94,9 +94,7 @@ public class RadialMenu extends Group {
     private double subMenuOffset = 1;
 
     public RadialMenu() {
-    
-    	setTranslateX(100);
-    	setTranslateY(200);
+
 	itemToTexts = new HashMap<RadialMenuItem, List<Text>>();
 	itemToSubItem = new HashMap<RadialMenuItem, List<RadialMenuItem>>();
 	items = new ArrayList<RadialMenuItem>();
@@ -121,6 +119,7 @@ public class RadialMenu extends Group {
 			    .build();
 	    
 	    List<RadialMenuItem> subItemsTemp = new ArrayList<RadialMenuItem>();
+	    item.text = itemTitle;
 	    
 	    for (int j = 0; j < subMenus[i].length; j++){
 	    	
@@ -137,7 +136,7 @@ public class RadialMenu extends Group {
 			    .length(subLength)
 			    .clockwise(true)
 			    .build();
-		    
+		    subItem.text = subItemTitle + itemTitle;
 		    subItemsTemp.add(subItem);
 		    subItems.add(subItem);
 		    subItemsGroup.getChildren().add(subItem);
@@ -227,7 +226,7 @@ public class RadialMenu extends Group {
 	    });
 	}
 
-	center = CircleBuilder.create().fill(Color.WHITE)
+	center = CircleBuilder.create().fill(Color.YELLOW)
 		.radius(centerClosedRadius).stroke(strokeColor).centerX(0)
 		.centerX(0).build();
 	centerText = new Text("23");
@@ -513,8 +512,8 @@ public class RadialMenu extends Group {
     		    final ObservableValue<? extends Number> obsValue,
     		    final Number previousValue, final Number newValue) {
     		final double textRotationOffset = 180;
-    		final double radius = itemRadius
-    			+ (textRadius - itemRadius)
+    		final double radius = centerClosedRadius
+    			+ (textRadius - centerClosedRadius)
     			* newValue.doubleValue();
 
     		double letterAngle = startAngle + angleStep + angleOffset
@@ -546,10 +545,10 @@ public class RadialMenu extends Group {
 
     	    Font[] fonts = new Font[] {
     		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 0),
+    		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 6),
     		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 7),
-    		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 8),
-    		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 10),
-    		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 11) };
+    		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 9),
+    		    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 10) };
 
     	    private Font getTextFont(final double newValue) {
     		final int fontArrayIndex;
@@ -647,11 +646,11 @@ public class RadialMenu extends Group {
 		    }
 	
 		    Font[] fonts = new Font[] {
+			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 5),
 			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 6),
 			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 7),
-			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 8),
-			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 10),
-			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 11) };
+			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 9),
+			    Font.font(java.awt.Font.SANS_SERIF, FontWeight.NORMAL, 10) };
 	
 		    private Font getTextFont(final double newValue) {
 			final int fontArrayIndex;
@@ -724,6 +723,14 @@ public class RadialMenu extends Group {
 	final double rotate = 0 - angle;
 		
 		return rotate;
+    }
+    
+    public void setPlayersNumber(String number){
+    	centerText.setText(number);
+    }
+    
+    public String getPlayersNumber(){
+    	return centerText.getText();
     }
 
 }

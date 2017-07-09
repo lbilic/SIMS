@@ -14,8 +14,14 @@
           <Igrac fx:id="igrac3"/>
           <Igrac fx:id="igrac4"/>
           <Igrac fx:id="igrac5"/>
+          <Igrac fx:id="igrac6"/>
+          <Igrac fx:id="igrac7"/>
+          <Igrac fx:id="igrac8"/>
+          <Igrac fx:id="igrac9"/>
+          <Igrac fx:id="igrac10"/>
+          <Igrac fx:id="igrac11"/>
+          <Igrac fx:id="igrac12"/>
           
-          <Button onAction="#foo" prefWidth="150" prefHeight="50" />
       </VBox>
    </children>
 </fx:root>
