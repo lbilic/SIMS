@@ -125,7 +125,7 @@ public class MainController {
 	public void newMatch(){
 		openingStage.hide();
 		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/mainWindow.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/insertWindow.fxml"));
         Parent root;
 		try {
 			root = loader.load();
@@ -150,7 +150,25 @@ public class MainController {
 	}
 	
 	public void startMatch(){
+		match.startMatch();
+	}
+	
+	public void startMatchView(){
+		inputStage.close();
 		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/mainWindow.fxml"));
+        Parent root;
+		try {
+			root = loader.load();
+			Scene scene = new Scene(root);
+	        scene.getStylesheets().add("view/resources/style.css");
+	        Stage stage = new Stage();
+	        stage.setScene(scene);
+	        stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        
 	}
 
 }

@@ -23,14 +23,15 @@ public class Creating extends State{
 	public void timeStarted() {	
 		//Ovo zovemo samo zato sto nemamo unosenje podataka od strane korisnika
 		//nego su uneseni rucno
-		match.changeState(new Running(match));
+		//match.changeState(new Running(match));
 	}
 
 	@Override
 	public void startMatch() {	
-		if (allDataInserted())
-			match.changeState(new Running(match));
-		else{
+		if (allDataInserted()){
+			match.changeState(new Paused(match));
+			MainController.getInstance().startMatchView();
+		}else{
 			MainController.getInstance().dataRequiredMessage();
 		}
 	}

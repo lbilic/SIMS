@@ -7,7 +7,7 @@ import model.Timer;
 
 public class TimerController {
 	
-	private java.util.Timer timer;
+	private java.util.Timer timer = new java.util.Timer();;
 	private Timer t;
 	
 	public TimerController(Timer t){
