@@ -12,6 +12,7 @@ public class TimerController {
 	
 	public TimerController(Timer t){
 		this.t = t;
+		timer = new java.util.Timer();
 	}
 	
 	public void start(){
