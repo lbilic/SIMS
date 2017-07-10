@@ -33,7 +33,7 @@ public class ViewController implements Initializable {
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+		MainController.getInstance().setViewController(this);
 		//Ovako setujes broj na dugmetu
 		//imas i getPlayersNumber koja ti vraca String koji broj igrac nosi
 		//full_court.players_on_court ti je arrayList dugmadi na terenu
@@ -54,7 +54,7 @@ public class ViewController implements Initializable {
 		setHomeTeam("Los Angeles Lakers");
 		setAwayTeam("Boston Celtics");
 		setResult("48 : 39");
-		setTime("9 : 12");
+		//setTime("0:00");
 		
 		// Kada budes slao imena sortiraj ih po brojevima
 		// i onda indexiraj igrace po tome posto ne mozes da nadjes igraca po imenu ni po broju posle
@@ -99,10 +99,11 @@ public class ViewController implements Initializable {
 				if (scoreBoard.time_button.getText().equals("PLAY")){
 					//Ovo je neka tvoja funkcija
 					//Controller.timeStarted();
+					MainController.getInstance().start();
 					scoreBoard.time_button.setText("PAUSE");
 				}else{
 					// Ovo je neka tvoja funkcija
-					//Controller.timePaused();
+					MainController.getInstance().pause();
 					scoreBoard.time_button.setText("PLAY");
 				}
 			}
