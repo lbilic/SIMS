@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Team {
 	private ArrayList<Player> players = new ArrayList<Player>();
+	private Coach coach;
+	private Town home_town;
 	
 	public Player getPlayer(int number) {
 		for(Player p : players)
