@@ -1,4 +1,6 @@
-package model;
+package model.events;
+
+import model.Player;
 
 public class Block extends Event{
 

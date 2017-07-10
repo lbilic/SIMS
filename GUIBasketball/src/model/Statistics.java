@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import model.events.Event;
+
 public class Statistics {
 	private ArrayList<PlayerStats> playerStats;
 	private ArrayList<TeamStats> teamStats;

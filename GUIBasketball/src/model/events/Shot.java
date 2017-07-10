@@ -1,6 +1,6 @@
-package model;
+package model.events;
 
 public abstract class Shot extends Event{
 	protected boolean made;
-	protected int x, y;
+	protected int pos_x, pos_y;
 }

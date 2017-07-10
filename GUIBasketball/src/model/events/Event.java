@@ -1,6 +1,8 @@
-package model;
+package model.events;
 
 import java.util.Date;
+
+import model.Contributor;
 
 public abstract class Event {
 	private Date time;

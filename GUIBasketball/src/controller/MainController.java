@@ -3,18 +3,18 @@ package controller;
 import java.util.TimerTask;
 
 import javafx.application.Platform;
-import model.Assist;
-import model.Block;
-import model.DefensiveFoul;
-import model.DefensiveRebound;
 import model.Match;
-import model.OffensiveFoul;
-import model.OffensiveRebound;
-import model.OnePtShot;
-import model.Steal;
 import model.ThreePtShot;
-import model.Turnover;
-import model.TwoPtShot;
+import model.events.Assist;
+import model.events.Block;
+import model.events.DefensiveFoul;
+import model.events.DefensiveRebound;
+import model.events.OffensiveFoul;
+import model.events.OffensiveRebound;
+import model.events.OnePtShot;
+import model.events.Steal;
+import model.events.Turnover;
+import model.events.TwoPtShot;
 import view.controller.ViewController;
 
 public class MainController {
