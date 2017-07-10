@@ -15,4 +15,8 @@ public class Player extends Contributor{
 	public int getNumber() {
 		return number;
 	}
+
+	public String getName() {
+		return name;
+	}
 }

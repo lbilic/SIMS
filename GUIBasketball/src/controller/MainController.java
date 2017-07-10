@@ -1,14 +1,19 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.Coach;
 import model.Match;
 import model.Player;
+import model.Team;
 import model.Timer;
+import model.Town;
 import model.events.Assist;
 import model.events.Block;
 import model.events.DefensiveFoul;
@@ -170,5 +175,66 @@ public class MainController {
 		}
         
 	}
+	
+	public void generateMatchInfo() {
+		Team home = new Team();
+		Team away = new Team();
+		home.setName("Crvena Zvezda");
+		
+		home.addPlayer(new Player("Milos Milankovic", 1));
+		home.addPlayer(new Player("Nikola Jankovic", 2));
+		home.addPlayer(new Player("Nemanja Ursulesku", 3));
+		home.addPlayer(new Player("Vlade Divac", 4));
+		home.addPlayer(new Player("Nikola Majkic", 5));
+		home.addPlayer(new Player("Antonio Bezinski", 6));
+		home.addPlayer(new Player("Mario Kalas", 7));
+		home.addPlayer(new Player("Jovan Nikolic", 8));
+		home.addPlayer(new Player("Zeljko Petrovic", 9));
+		home.addPlayer(new Player("Marko Strmina", 10));
+		home.addPlayer(new Player("Stevan Doslo", 11));
+		home.addPlayer(new Player("Petar Jovanovic", 12));
+		home.setCoach(new Coach("Nikola Jovic"));
+		home.setHome_town(new Town("Beograd"));
+		home.setColor("#ffffff");
+		ArrayList<String> homeNames = new ArrayList<String>();
+		for(Player p : home.getPlayers())
+			homeNames.add(p.getName());
+		
+		away.setName("Vojvodina");
+		away.addPlayer(new Player("Zeljko Milankovic", 1));
+		away.addPlayer(new Player("Iman Jan", 2));
+		away.addPlayer(new Player("Janos Juhas", 3));
+		away.addPlayer(new Player("Istvan Petrov", 4));
+		away.addPlayer(new Player("Djordje Brstina", 5));
+		away.addPlayer(new Player("Marko Riban", 6));
+		away.addPlayer(new Player("Darko Jovan", 7));
+		away.addPlayer(new Player("Luka Milosevic", 8));
+		away.addPlayer(new Player("Milan Stankovic", 9));
+		away.addPlayer(new Player("Rade Doroslovacki", 10));
+		away.addPlayer(new Player("Nemanja Bjelica", 11));
+		away.addPlayer(new Player("Ivan Bjelis", 12));
+		away.setCoach(new Coach("Jovan Jankov"));
+		away.setHome_town(new Town("Novi Sad"));
+		away.setColor("#000000");
+		ArrayList<String> awayNames = new ArrayList<String>();
+		for(Player p : away.getPlayers())
+			awayNames.add(p.getName());
+		
+		view.setHomeTeam(home.getName());
+		view.setHomeTeamColor(Color.web(home.getColor()));
+		ArrayList<String> petorka = new ArrayList<String>();
+		for(int i = 1; i <= 5; i++)
+			petorka.add(String.valueOf(i));
+		view.setHomeTeamOnCourt(petorka);
+		view.setHomeTeamPlayers(homeNames);
+		
+		view.setAwayTeam(away.getName());
+		view.setAwayTeamColor(Color.web(away.getColor()));
+		view.setAwayTeamOnCourt(petorka);
+		view.setAwayTeamPlayers(awayNames);
+		
+		match.setHome(home);
+		match.setAway(away);
+		}
 
 }

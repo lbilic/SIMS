@@ -72,6 +72,14 @@ public class Match {
 	public String getState() {
 		return active.getClass().toString();
 	}
+
+	public void setHome(Team home) {
+		this.home = home;
+	}
+
+	public void setAway(Team away) {
+		this.away = away;
+	}
 	
 	
 }
