@@ -2,6 +2,7 @@ package model;
 
 public class Coach {
 	private String name;
+	private Team coaching;
 	
 	public Coach() {}
 
@@ -16,5 +17,13 @@ public class Coach {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Team getCoaching() {
+		return coaching;
+	}
+
+	public void setCoaching(Team coaching) {
+		this.coaching = coaching;
 	}
 }

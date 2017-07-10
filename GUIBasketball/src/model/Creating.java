@@ -28,11 +28,7 @@ public class Creating extends State{
 	public void timePaused() {	}
 
 	@Override
-	public void timeStarted() {	
-		//Ovo zovemo samo zato sto nemamo unosenje podataka od strane korisnika
-		//nego su uneseni rucno
-		//match.changeState(new Running(match));
-	}
+	public void timeStarted() {		}
 
 	@Override
 	public void startMatch() {	

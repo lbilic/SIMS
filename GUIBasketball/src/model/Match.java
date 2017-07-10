@@ -34,7 +34,9 @@ public class Match {
 	}
 	
 	public void changeState(State state) {
+		active.exit();
 		active = state;
+		active.entry();
 	}
 	
 	public void startTime() {

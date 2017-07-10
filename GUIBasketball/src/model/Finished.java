@@ -11,12 +11,13 @@ public class Finished extends State{
 	}
 
 	@Override
-	public void entry() {	
-		match.writeToFile();
-	}
+	public void entry() {}
 
 	@Override
-	public void exit() {	}
+	public void exit() {
+
+		match.writeToFile();
+	}
 
 	@Override
 	public void timePaused() {	}

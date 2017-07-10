@@ -7,7 +7,6 @@ public class Running extends State{
 	
 	public Running(Match match){
 		this.match = match;
-		entry();
 	}
 	
 	@Override

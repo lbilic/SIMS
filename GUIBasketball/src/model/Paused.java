@@ -6,7 +6,6 @@ public class Paused extends State{
 	Match match;
 	public Paused(Match match){
 		this.match = match;
-		entry();
 	}
 
 	@Override
