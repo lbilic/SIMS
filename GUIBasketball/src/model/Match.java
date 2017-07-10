@@ -69,5 +69,9 @@ public class Match {
 		return events;
 	}
 	
+	public String getState() {
+		return active.getClass().toString();
+	}
+	
 	
 }
