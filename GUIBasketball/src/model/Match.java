@@ -18,13 +18,6 @@ public class Match {
 	public void addEvent(Event e) {
 		events.add(e);
 	}
-
-	public Player getPlayer(String team, int playerNumber) {
-		if(team.equalsIgnoreCase("home"))
-			return home.getPlayer(playerNumber);
-		else
-			return away.getPlayer(playerNumber);
-	}
 	
 	public void writeToFile() {
 		// TODO: odraditi upis u fajl
@@ -40,5 +33,12 @@ public class Match {
 	
 	public void pauseTime() {
 		
+	}
+	
+	public Team getTeam(String team) {
+		if(team.equalsIgnoreCase("home"))
+			return home;
+		else
+			return away;
 	}
 }

@@ -4,6 +4,8 @@ import java.util.TimerTask;
 
 import javafx.application.Platform;
 import model.Match;
+import model.Player;
+import model.Team;
 import model.events.Assist;
 import model.events.Block;
 import model.events.DefensiveFoul;
@@ -67,32 +69,36 @@ public class MainController {
 		tempNumber = playersNumber;
 		tempAction = action;
 	}
+	
+	public Player getPlayer(String team, int playersNumber) {
+		return match.getTeam(team).getPlayer(playersNumber);
+	}
 
 	public void eventOccured(String team, String playersNumber, String action) {
 		switch (action) {
 		case "DEFENSIVEFOUL":
-			match.addEvent(new DefensiveFoul(match.getPlayer(team, Integer.parseInt(playersNumber))));
+			match.addEvent(new DefensiveFoul(getPlayer(team, Integer.parseInt(playersNumber))));
 			break;
 		case "OFFENSIVEFOUL":
-			match.addEvent(new OffensiveFoul(match.getPlayer(team, Integer.parseInt(playersNumber))));
+			match.addEvent(new OffensiveFoul(getPlayer(team, Integer.parseInt(playersNumber))));
 			break;
 		case "DEFENSIVEREBOUND":
-			match.addEvent(new DefensiveRebound(match.getPlayer(team, Integer.parseInt(playersNumber))));
+			match.addEvent(new DefensiveRebound(getPlayer(team, Integer.parseInt(playersNumber))));
 			break;
 		case "OFFENSIVEREBOUND":
-			match.addEvent(new OffensiveRebound(match.getPlayer(team, Integer.parseInt(playersNumber))));
+			match.addEvent(new OffensiveRebound(getPlayer(team, Integer.parseInt(playersNumber))));
 			break;
 		case "STEAL":
-			match.addEvent(new Steal(match.getPlayer(team, Integer.parseInt(playersNumber))));
+			match.addEvent(new Steal(getPlayer(team, Integer.parseInt(playersNumber))));
 			break;
 		case "ASSIST":
-			match.addEvent(new Assist(match.getPlayer(team, Integer.parseInt(playersNumber))));
+			match.addEvent(new Assist(getPlayer(team, Integer.parseInt(playersNumber))));
 			break;
 		case "TURNOVER":
-			match.addEvent(new Turnover(match.getPlayer(team, Integer.parseInt(playersNumber))));
+			match.addEvent(new Turnover(getPlayer(team, Integer.parseInt(playersNumber))));
 			break;
 		case "BLOCK":
-			match.addEvent(new Block(match.getPlayer(team, Integer.parseInt(playersNumber))));
+			match.addEvent(new Block(getPlayer(team, Integer.parseInt(playersNumber))));
 			break;
 		}
 		System.out.println(team + playersNumber + action);
@@ -101,13 +107,13 @@ public class MainController {
 	public void eventOccured(String scored, int x, int y) {
 		switch (tempAction) {
 		case "1 POINTSHOT":
-			match.addEvent(new OnePtShot(match.getPlayer(tempTeam, Integer.parseInt(tempNumber)), scored, x, y));
+			match.addEvent(new OnePtShot(getPlayer(tempTeam, Integer.parseInt(tempNumber)), scored, x, y));
 			break;
 		case "2 POINTSHOT":
-			match.addEvent(new TwoPtShot(match.getPlayer(tempTeam, Integer.parseInt(tempNumber)), scored, x, y));
+			match.addEvent(new TwoPtShot(getPlayer(tempTeam, Integer.parseInt(tempNumber)), scored, x, y));
 			break;
 		case "3 POINTSHOT":
-			match.addEvent(new ThreePtShot(match.getPlayer(tempTeam, Integer.parseInt(tempNumber)), scored, x, y));
+			match.addEvent(new ThreePtShot(getPlayer(tempTeam, Integer.parseInt(tempNumber)), scored, x, y));
 			break;
 		}
 		System.out.println(tempTeam + tempNumber + "scored" + x + y);
