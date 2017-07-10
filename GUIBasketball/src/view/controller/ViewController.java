@@ -76,8 +76,8 @@ public class ViewController implements Initializable {
 		//setAwayTeamOnCourt(numbers);
 		
 		//Podesavanje boje timova
-		//setHomeTeamColor(Color.GOLD);
-		//setAwayTeamColor(Color.DARKSEAGREEN);
+		setHomeTeamColor(Color.GOLD);
+		setAwayTeamColor(Color.DARKSEAGREEN);
 		
 		
 		full_court.court.canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {

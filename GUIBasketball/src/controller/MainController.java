@@ -226,12 +226,12 @@ public class MainController {
 			petorka.add(String.valueOf(i));
 		view.setHomeTeamOnCourt(petorka);
 		view.setHomeTeamPlayers(homeNames);
-		view.setHomeTeamColor(Color.web(home.getColor()));
+		//view.setHomeTeamColor(Color.web(home.getColor()));
 		
 		view.setAwayTeam(away.getName());
 		view.setAwayTeamOnCourt(petorka);
 		view.setAwayTeamPlayers(awayNames);
-		view.setAwayTeamColor(Color.web(away.getColor()));
+		//view.setAwayTeamColor(Color.web(away.getColor()));
 		
 		match.setHome(home);
 		match.setAway(away);
