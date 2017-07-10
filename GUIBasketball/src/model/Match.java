@@ -35,10 +35,11 @@ public class Match {
 		
 	}
 	
-	public Team getTeam(String team) {
-		if(team.equalsIgnoreCase("home"))
-			return home;
-		else
-			return away;
+	public Team getHome() {
+		return home;
+	}
+	
+	public Team getAway() {
+		return away;
 	}
 }

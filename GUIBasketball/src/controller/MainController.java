@@ -71,7 +71,10 @@ public class MainController {
 	}
 	
 	public Player getPlayer(String team, int playersNumber) {
-		return match.getTeam(team).getPlayer(playersNumber);
+		if(team.equalsIgnoreCase("home"))
+			return match.getHome().getPlayer(playersNumber);
+		else
+			return match.getAway().getPlayer(playersNumber);
 	}
 
 	public void eventOccured(String team, String playersNumber, String action) {
