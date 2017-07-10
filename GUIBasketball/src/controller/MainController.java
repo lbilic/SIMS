@@ -39,7 +39,7 @@ public class MainController {
 	        		updateTime();
 	        	});
 	        }
-	    },0,  1000 );
+	    },0,  100 );
 	}
 	
 	public void pause() {
@@ -49,7 +49,7 @@ public class MainController {
 	
 	public void updateTime() {
 		t.updateTime();
-		view.setTime(String.valueOf(t.getTime() / 60) + ":" + String.valueOf(t.getTime() % 60));
+		view.setTime(String.valueOf(t.getTime() / 60) + " : " + String.format("%02d", t.getTime() % 60));
 	}
 
 	public void setViewController(ViewController _vc) {

@@ -54,7 +54,7 @@ public class ViewController implements Initializable {
 		setHomeTeam("Los Angeles Lakers");
 		setAwayTeam("Boston Celtics");
 		setResult("48 : 39");
-		//setTime("0:00");
+		setTime("0 : 00");
 		
 		// Kada budes slao imena sortiraj ih po brojevima
 		// i onda indexiraj igrace po tome posto ne mozes da nadjes igraca po imenu ni po broju posle

@@ -6,7 +6,7 @@ import controller.MainController;
 public class Timer {
 	
 	private java.util.Timer timer;
-	private int time;
+	private float time;
 	private boolean ticking;
 	
 	public Timer() {
@@ -24,10 +24,10 @@ public class Timer {
 	
 	public void updateTime() {
 		if(ticking)
-			time++;
+			time += 0.1;
 	}
 	
 	public int getTime() {
-		return time;
+		return (int)time;
 	}
 }
