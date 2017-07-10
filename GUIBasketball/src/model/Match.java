@@ -80,6 +80,46 @@ public class Match {
 	public void setAway(Team away) {
 		this.away = away;
 	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Referee getReferee() {
+		return referee;
+	}
+
+	public void setReferee(Referee referee) {
+		this.referee = referee;
+	}
+
+	public State getActive() {
+		return active;
+	}
+
+	public void setActive(State active) {
+		this.active = active;
+	}
+
+	public Arena getPlayed_in() {
+		return played_in;
+	}
+
+	public void setPlayed_in(Arena played_in) {
+		this.played_in = played_in;
+	}
+
+	public void setEvents(ArrayList<Event> events) {
+		this.events = events;
+	}
+
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
 	
 	
 }

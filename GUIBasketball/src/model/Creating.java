@@ -16,6 +16,14 @@ public class Creating extends State{
 	@Override
 	public void exit() {	}
 
+	public Match getMatch() {
+		return match;
+	}
+
+	public void setMatch(Match match) {
+		this.match = match;
+	}
+
 	@Override
 	public void timePaused() {	}
 

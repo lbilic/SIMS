@@ -45,4 +45,12 @@ public class Paused extends State{
 		return true;
 	}
 
+	public Match getMatch() {
+		return match;
+	}
+
+	public void setMatch(Match match) {
+		this.match = match;
+	}
+
 }

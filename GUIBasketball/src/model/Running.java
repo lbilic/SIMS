@@ -42,4 +42,13 @@ public class Running extends State{
 		match.addEvent(event);
 	}
 
+	public Match getMatch() {
+		return match;
+	}
+
+	public void setMatch(Match match) {
+		this.match = match;
+	}
+	
+
 }

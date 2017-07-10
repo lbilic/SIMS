@@ -35,5 +35,13 @@ public class Finished extends State{
 
 	@Override
 	public void eventOccurred(Event event) {	}
+
+	public Match getMatch() {
+		return match;
+	}
+
+	public void setMatch(Match match) {
+		this.match = match;
+	}
 	
 }
