@@ -34,6 +34,7 @@ public class ViewController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		MainController.getInstance().setViewController(this);
+		MainController.getInstance().generateMatchInfo();
 		//Ovako setujes broj na dugmetu
 		//imas i getPlayersNumber koja ti vraca String koji broj igrac nosi
 		//full_court.players_on_court ti je arrayList dugmadi na terenu
@@ -51,8 +52,8 @@ public class ViewController implements Initializable {
 		fauls_home.getPlayer(2).faulOut();
 		
 		//Ovako radis sa semaforom
-		setHomeTeam("Los Angeles Lakers");
-		setAwayTeam("Boston Celtics");
+		//setHomeTeam("Los Angeles Lakers");
+		//setAwayTeam("Boston Celtics");
 		setResult("48 : 39");
 		setTime("0 : 00");
 		
@@ -63,7 +64,7 @@ public class ViewController implements Initializable {
 		names.add("Balenovic M.");
 		names.add("Bilic L.");
 
-		setHomeTeamPlayers(names);		
+		//setHomeTeamPlayers(names);		
 		
 		// Dodavanje brojeva na dugmad na terenu
 		ArrayList<String> numbers = new ArrayList<String>();
@@ -72,11 +73,11 @@ public class ViewController implements Initializable {
 		numbers.add("1");
 		numbers.add("12");
 		numbers.add("33");
-		setAwayTeamOnCourt(numbers);
+		//setAwayTeamOnCourt(numbers);
 		
 		//Podesavanje boje timova
-		setHomeTeamColor(Color.GOLD);
-		setAwayTeamColor(Color.DARKSEAGREEN);
+		//setHomeTeamColor(Color.GOLD);
+		//setAwayTeamColor(Color.DARKSEAGREEN);
 		
 		
 		full_court.court.canvas.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent e) -> {

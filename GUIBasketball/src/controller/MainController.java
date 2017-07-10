@@ -195,7 +195,7 @@ public class MainController {
 		home.addPlayer(new Player("Petar Jovanovic", 12));
 		home.setCoach(new Coach("Nikola Jovic"));
 		home.setHome_town(new Town("Beograd"));
-		home.setColor("#ffffff");
+		home.setColor("#FF0050");
 		ArrayList<String> homeNames = new ArrayList<String>();
 		for(Player p : home.getPlayers())
 			homeNames.add(p.getName());
@@ -215,23 +215,23 @@ public class MainController {
 		away.addPlayer(new Player("Ivan Bjelis", 12));
 		away.setCoach(new Coach("Jovan Jankov"));
 		away.setHome_town(new Town("Novi Sad"));
-		away.setColor("#000000");
+		away.setColor("#FFFF00");
 		ArrayList<String> awayNames = new ArrayList<String>();
 		for(Player p : away.getPlayers())
 			awayNames.add(p.getName());
 		
 		view.setHomeTeam(home.getName());
-		view.setHomeTeamColor(Color.web(home.getColor()));
 		ArrayList<String> petorka = new ArrayList<String>();
 		for(int i = 1; i <= 5; i++)
 			petorka.add(String.valueOf(i));
 		view.setHomeTeamOnCourt(petorka);
 		view.setHomeTeamPlayers(homeNames);
+		view.setHomeTeamColor(Color.web(home.getColor()));
 		
 		view.setAwayTeam(away.getName());
-		view.setAwayTeamColor(Color.web(away.getColor()));
 		view.setAwayTeamOnCourt(petorka);
 		view.setAwayTeamPlayers(awayNames);
+		view.setAwayTeamColor(Color.web(away.getColor()));
 		
 		match.setHome(home);
 		match.setAway(away);
