@@ -5,35 +5,19 @@ import java.util.ArrayList;
 import model.events.Event;
 
 public class Statistics {
-	private ArrayList<PlayerStats> playerStats;
-	private ArrayList<TeamStats> teamStats;
-	
-	public Statistics() {
-		playerStats = new ArrayList<PlayerStats>();
+	public static Stat getStats(ArrayList<Event> events) {
+		return null;
 	}
 	
-	
-	/// trazi igraca po njegovom broju i vraca njegove statistike
-	public PlayerStats getPlayerStats(Player player) {
-		for (PlayerStats temp : playerStats) {
-			if (temp.getPlayer().getNumber() == player.getNumber()) {
-				return temp;
-			}
+	public static Stat getStatsHome(ArrayList<Event> events) {
+		Stat retVal = new Stat();
+		for(Event e : events) {
+			System.out.println(e.getClass()); // msm da moze ovako da se dobije koja je statistika u pitanju
 		}
 		return null;
 	}
 	
-	public void addPlayerStats(Player player, Event event) {
-		// TODO nadji igraca i dodaj mu event, ili ako ne postoji dodaj novi PlayerStats sa igracem i eventom
-	}
-	
-	
-	public PlayerStats getTeamStats(Team team) {
-		// TODO vrati timske statistike u zavisnosti od 'team'
+	public static Stat getStatsAway(ArrayList<Event> events) {
 		return null;
-	}
-	
-	public void addTeamStats(Team team, Event event){
-		// TODO dadaj timu 'team' event 'event'
 	}
 }

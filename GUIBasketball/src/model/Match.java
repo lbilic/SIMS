@@ -64,4 +64,10 @@ public class Match {
 	public void eventOccurred(Event event){
 		active.eventOccurred(event);
 	}
+
+	public ArrayList<Event> getEvents() {
+		return events;
+	}
+	
+	
 }

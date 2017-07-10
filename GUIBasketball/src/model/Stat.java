@@ -16,7 +16,22 @@ public class Stat {
 	private int turnovers;
 	private int fouls;
 	
-	public Stat() {}
+	public Stat() {
+		this.points = 0;
+		this.fgm = 0;
+		this.fga = 0;
+		this.fg_percentage = 0;
+		this.ftm = 0;
+		this.fta = 0;
+		this.ft_percentage = 0;
+		this.assists = 0;
+		this.rebounds = 0;
+		this.defensive_rebounds = 0;
+		this.offensive_rebounds = 0;
+		this.steals = 0;
+		this.turnovers = 0;
+		this.fouls = 0;
+	}
 	
 	public Stat(int points, int fgm, int fga, double fg_percentage, int ftm, int fta, double ft_percentage, int assists,
 			int rebounds, int defensive_rebounds, int offensive_rebounds, int steals, int turnovers, int fouls) {
