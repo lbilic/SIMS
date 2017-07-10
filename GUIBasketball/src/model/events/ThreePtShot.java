@@ -1,6 +1,6 @@
-package model;
+package model.events;
 
-import model.events.Shot;
+import model.Player;
 
 public class ThreePtShot extends Shot{
 

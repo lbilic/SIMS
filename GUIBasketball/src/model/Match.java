@@ -10,9 +10,9 @@ public class Match {
 	private Team home = new Team();
 	private Team away = new Team();
 	private Date time;
-	private ArrayList<Referee> referees;
+	private Referee referees;
 	private ArrayList<Event> events = new ArrayList<Event>();
-	private State state;
+	private State active;
 	private Arena played_in;
 	
 	public void addEvent(Event e) {

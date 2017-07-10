@@ -4,7 +4,6 @@ import java.util.TimerTask;
 
 import javafx.application.Platform;
 import model.Match;
-import model.ThreePtShot;
 import model.events.Assist;
 import model.events.Block;
 import model.events.DefensiveFoul;
@@ -13,6 +12,7 @@ import model.events.OffensiveFoul;
 import model.events.OffensiveRebound;
 import model.events.OnePtShot;
 import model.events.Steal;
+import model.events.ThreePtShot;
 import model.events.Turnover;
 import model.events.TwoPtShot;
 import view.controller.ViewController;
