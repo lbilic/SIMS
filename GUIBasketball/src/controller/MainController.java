@@ -1,5 +1,11 @@
 package controller;
 
+import java.io.IOException;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import model.Match;
 import model.Player;
 import model.Timer;
@@ -21,6 +27,8 @@ public class MainController {
 	private static MainController instance = null;
 	private Match match;
 	private String tempTeam, tempNumber, tempAction;
+	private Stage openingStage;
+	private Stage inputStage;
 
 	private MainController() {
 		match = new Match();
@@ -108,6 +116,41 @@ public class MainController {
 	
 	public void dataRequiredMessage(){
 		System.out.println("No data inserted!");
+	}
+	
+	public void setOpeningStage(Stage openingStage){
+		this.openingStage = openingStage;
+	}
+	
+	public void newMatch(){
+		openingStage.hide();
+		
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/mainWindow.fxml"));
+        Parent root;
+		try {
+			root = loader.load();
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add("view/resources/style.css");
+	        inputStage = new Stage();
+	        inputStage.setScene(scene);
+	        inputStage.show();
+	        
+	        match = new Match();
+	        
+		} catch (IOException e) {
+			openingStage.show();
+		}
+        
+        
+	}
+	
+	public void cancelMatch(){
+		inputStage.close();
+		openingStage.show();
+	}
+	
+	public void startMatch(){
+		
 	}
 
 }
