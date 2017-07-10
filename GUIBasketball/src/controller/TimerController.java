@@ -7,11 +7,12 @@ import model.Timer;
 
 public class TimerController {
 	
-	private java.util.Timer timer = new java.util.Timer();;
+	private java.util.Timer timer;
 	private Timer t;
 	
 	public TimerController(Timer t){
 		this.t = t;
+		timer = new java.util.Timer();
 	}
 	
 	public void start(){
