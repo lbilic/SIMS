@@ -1,29 +1,48 @@
 package model;
 
+import model.events.Event;
+
 public class Paused extends State{
+	Match match;
+	public Paused(Match match){
+		this.match = match;
+		entry();
+	}
 
 	@Override
 	public void entry() {
-		// TODO Auto-generated method stub
-		
+		match.getTimer().pause();
 	}
 
 	@Override
-	public void exit() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void exit() {	}
 
 	@Override
-	public void timePaused() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void timePaused() {	}
 
 	@Override
 	public void timeStarted() {
-		// TODO Auto-generated method stub
+		if (matchRegular())
+			match.changeState(new Running(match));
+	}
+
+	@Override
+	public void startMatch() {	}
+
+	@Override
+	public void finishMatch() {	}
+	
+	@Override
+	public void timeRanOut() {	
+		match.changeState(new Finished(match));
+	}
+
+	@Override
+	public void eventOccurred(Event event) {	}
+	
+	private boolean matchRegular(){
 		
+		return true;
 	}
 
 }

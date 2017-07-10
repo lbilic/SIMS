@@ -1,30 +1,27 @@
 package model;
-import java.util.*;
 
-import controller.MainController;
+import controller.TimerController;
 
 public class Timer {
-	
-	private java.util.Timer timer;
+
 	private float time;
-	private boolean ticking;
+	private TimerController controller;
 	
 	public Timer() {
 		time = 0;
-		ticking = true;
+		controller = new TimerController(this);
 	}
 	
 	public void start() {
-		ticking = true;
+		controller.start();
 	}
 	
 	public void pause() {
-		ticking = false;
+		controller.pause();
 	}
 	
 	public void updateTime() {
-		if(ticking)
-			time += 0.1;
+		time += 0.1;
 	}
 	
 	public int getTime() {

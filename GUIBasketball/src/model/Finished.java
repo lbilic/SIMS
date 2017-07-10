@@ -1,29 +1,39 @@
 package model;
 
+import model.events.Event;
+
 public class Finished extends State{
-
-	@Override
-	public void entry() {
-		// TODO Auto-generated method stub
-		
+	
+	Match match;
+	
+	public Finished(Match match){
+		this.match = match;
 	}
 
 	@Override
-	public void exit() {
-		// TODO Auto-generated method stub
-		
+	public void entry() {	
+		match.writeToFile();
 	}
 
 	@Override
-	public void timePaused() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void exit() {	}
 
 	@Override
-	public void timeStarted() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void timePaused() {	}
+
+	@Override
+	public void timeStarted() {	}
+
+	@Override
+	public void startMatch() {	}
+
+	@Override
+	public void finishMatch() {	}
+
+	@Override
+	public void timeRanOut() {	}
+
+	@Override
+	public void eventOccurred(Event event) {	}
 	
 }
